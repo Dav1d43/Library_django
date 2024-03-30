@@ -1,6 +1,11 @@
 from django.shortcuts import render
-from .models import Book
+from .models import Reader
 
-def book_detail(request, book_id):
-    book = Book.objects.get(pk=book_id)
-    return render(request, 'book/detail.html', {'book': book})
+def reader_info(request):
+    if request.method == 'POST':
+        # Assuming you have a form to collect reader's data
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        reader = Reader.objects.create(name=name, email=email)
+        return render(request, 'reader/info_success.html', {'reader': reader})
+    return render(request, 'reader/info_form.html')
